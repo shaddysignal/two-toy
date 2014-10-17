@@ -1,0 +1,21 @@
+{
+  "name": "two-toy",
+  "version": "0.0.1",
+  "homepage": "http://non",
+  "authors": [
+    "Anton Shubin"
+  ],
+  "description": "two.js toy",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "two": "~0.4.0"
+  }
+}
