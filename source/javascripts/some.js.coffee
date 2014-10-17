@@ -34,34 +34,44 @@ rect.opacity = 0.75
 rect.noStroke()
 rect.custom = 0
 
+timeout = (index, transform) ->
+	setTimeout(transform, index * 1000)
+	console.log(index)
+	true
+
+foreach = (transform) ->
+	for i in [0...circles.length]
+		timeout(i, transform(circles[i]))
+	true
+
 keys = {
 	37: {
 		pressed: false
 		execute: () ->
-			for circle in circles
-				circle.rotation -= 0.05 * Math.PI
-			true
+			foreach((c) ->
+				c.rotation -= 0.1 * Math.PI
+			)
 	}
 	39: {
 		pressed: false
 		execute: () ->
-			for circle in circles
-				circle.rotation += 0.05 * Math.PI
-			true
+			foreach((c) ->
+				c.rotation += 0.1 * Math.PI
+			)
 	}
 	38: {
 		pressed: false
 		execute: () ->
-			for circle in circles
-				circle.acceleration += 0.5
-			true
+			foreach((c) ->
+				c.acceleration += 0.5
+			)
 	}
 	40: {
 		pressed: false
 		execute: () ->
-			for circle in circles
-				circle.acceleration -= 0.5
-			true
+			foreach((c) ->
+				c.acceleration -= 0.5
+			)
 	}
 	82: {
 		pressed: false
