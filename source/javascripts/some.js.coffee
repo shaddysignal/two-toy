@@ -5,16 +5,18 @@
 
 elem = document.getElementById('draw-shapes')
 params = { fullscreen: true }
+pos = {
+	x: 200
+	y: 200
+}
 two = new Two(params).appendTo(elem)
-
-rect = two.makeRectangle(213, 100, 100, 100)
 
 getCircles = (int) ->
 	iter = (circles, r) ->
 		if int < 0
 			circles
 		else
-			circle = two.makeCircle(72, 100, r)
+			circle = two.makeCircle(pos.x, pos.y, r)
 			circle.fill = '#FF8000'
 			circle.stroke = 'orangered'
 			circle.linewidth = 5
@@ -22,26 +24,20 @@ getCircles = (int) ->
 			circle.rotation = 0.0
 			circles.push(circle)
 			int -= 1
-			iter(circles, r / 2)
+			iter(circles, r / 1.5)
 
 	iter([], 30)
 
 circles = getCircles(3)
 circle = circles[0]
 
-rect.fill = 'rgb(0, 200, 255)'
-rect.opacity = 0.75
-rect.noStroke()
-rect.custom = 0
-
 timeout = (index, transform) ->
-	setTimeout(transform, index * 1000)
-	console.log(index)
+	setTimeout(transform(index), index * 100)
 	true
 
 foreach = (transform) ->
 	for i in [0...circles.length]
-		timeout(i, transform(circles[i]))
+		timeout(i, (i) -> () -> transform(circles[i]))
 	true
 
 keys = {
@@ -77,8 +73,8 @@ keys = {
 		pressed: false
 		execute: () ->
 			for circle in circles
-				circle.translation.x = 72
-				circle.translation.y = 100
+				circle.translation.x = pos.x
+				circle.translation.y = pos.y
 			true
 	}
 }
@@ -100,12 +96,6 @@ keysEvents = ->
 
 two.bind('update', (frameCount) ->
 	do keysEvents
-
-	if (rect.custom > 0.9999)
-		rect.custom = rect.rotation = 0
-	t = (1 - rect.custom) * 0.05
-	rect.custom += t
-	rect.rotation += t * 4 * Math.PI
 
 	for c in circles
 		c.translation.x += c.acceleration * Math.cos(c.rotation)
