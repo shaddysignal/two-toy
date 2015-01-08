@@ -7,3 +7,5 @@ gem "middleman-livereload", "~> 3.1.0"
 
 gem "execjs"
 gem "therubyrhino"
+
+gem "eventmachine", github: "eventmachine/eventmachine"
